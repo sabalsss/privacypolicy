@@ -1,15 +1,641 @@
-PromptVault Privacy Policy
-Last updated: March 2026
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PromptVault — Privacy Policy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-PromptVault does not collect, transmit, store, or share any personal data.
+    :root {
+      --orange: #f97316;
+      --orange-dark: #ea580c;
+      --pink: #ec4899;
+      --bg: #0a0a0b;
+      --bg2: #111113;
+      --bg3: #1a1a1e;
+      --border: rgba(255,255,255,0.07);
+      --text: #f1f0ee;
+      --muted: rgba(255,255,255,0.45);
+      --green: #22c55e;
+    }
 
-All prompt data (titles, text, tags, settings) is stored exclusively in 
-Chrome's local storage on your own device using the chrome.storage.local API.
+    html { scroll-behavior: smooth; }
 
-We have no servers. We have no database. We have no analytics. We have no 
-accounts. Nothing you type or save ever leaves your browser.
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
 
-The extension only activates on chatgpt.com and chat.openai.com. It does 
-not read, monitor, or transmit any content from these or any other pages.
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
 
-Contact: sabaldev670@gmail.com
+    /* ── Header ── */
+    header {
+      position: relative;
+      z-index: 1;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(249,115,22,0.06) 0%, transparent 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--orange), var(--pink));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 4px 24px rgba(249,115,22,0.35);
+    }
+
+    .logo-text {
+      font-family: 'Space Mono', monospace;
+      font-size: 22px;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--orange), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    header h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    header h1 span {
+      background: linear-gradient(90deg, var(--orange), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .meta {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.25);
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 12px;
+      color: var(--green);
+      font-weight: 600;
+      margin-top: 16px;
+    }
+
+    .badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* ── TL;DR Banner ── */
+    .tldr {
+      position: relative;
+      z-index: 1;
+      margin: 40px auto;
+      max-width: 760px;
+      padding: 0 24px;
+    }
+
+    .tldr-card {
+      background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(236,72,153,0.08));
+      border: 1px solid rgba(249,115,22,0.2);
+      border-radius: 16px;
+      padding: 28px 32px;
+    }
+
+    .tldr-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--orange);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .tldr-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .tldr-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .tldr-item .icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── Main content ── */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Section ── */
+    .section {
+      margin-bottom: 48px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .section-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--orange);
+      background: rgba(249,115,22,0.1);
+      border: 1px solid rgba(249,115,22,0.2);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-weight: 700;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .section-body {
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.8;
+    }
+
+    /* ── No-data grid ── */
+    .no-data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .no-data-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(239,68,68,0.06);
+      border: 1px solid rgba(239,68,68,0.12);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .no-data-item .x {
+      color: #f87171;
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    /* ── What IS stored ── */
+    .stored-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: rgba(34,197,94,0.05);
+      border: 1px solid rgba(34,197,94,0.12);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .stored-item .check {
+      color: var(--green);
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .stored-item strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ── Permission table ── */
+    .perm-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .perm-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 14px;
+      align-items: start;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .perm-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: var(--orange);
+      background: rgba(249,115,22,0.1);
+      border: 1px solid rgba(249,115,22,0.2);
+      border-radius: 6px;
+      padding: 3px 8px;
+      text-align: center;
+      align-self: start;
+      margin-top: 2px;
+    }
+
+    .perm-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+    }
+
+    /* ── Contact ── */
+    .contact-box {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .contact-box a {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-box a:hover { text-decoration: underline; }
+
+    /* ── Certifications ── */
+    .cert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cert-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+    }
+
+    .cert-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: rgba(34,197,94,0.15);
+      border: 1px solid rgba(34,197,94,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--green);
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--orange), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    .footer-sub {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 540px) {
+      .section-body { padding: 18px 18px; }
+      .section-header { padding: 18px 18px; }
+      .perm-item { grid-template-columns: 1fr; }
+      .tldr-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <div class="logo-icon">⚡</div>
+      <span class="logo-text">PromptVault</span>
+    </div>
+    <h1>Privacy <span>Policy</span></h1>
+    <div class="meta">
+      <span class="meta-item">📅 Last updated: March 2026</span>
+      <span class="meta-item">🔖 Version 1.0.0</span>
+      <span class="meta-item">🌐 Chrome Extension</span>
+    </div>
+    <div style="display:flex;justify-content:center;">
+      <span class="badge">Zero data collected</span>
+    </div>
+  </header>
+
+  <!-- TL;DR -->
+  <div class="tldr">
+    <div class="tldr-card">
+      <div class="tldr-label">⚡ TL;DR — The short version</div>
+      <div class="tldr-grid">
+        <div class="tldr-item"><span class="icon">🚫</span> No data collected</div>
+        <div class="tldr-item"><span class="icon">🚫</span> No servers or databases</div>
+        <div class="tldr-item"><span class="icon">🚫</span> No accounts required</div>
+        <div class="tldr-item"><span class="icon">🚫</span> No tracking or analytics</div>
+        <div class="tldr-item"><span class="icon">✅</span> Everything stays on your device</div>
+        <div class="tldr-item"><span class="icon">✅</span> Works 100% offline</div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- 01 Overview -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <span class="section-title">Overview</span>
+      </div>
+      <div class="section-body">
+        <p>PromptVault is a Chrome Extension that helps you save, organize, search, and inject reusable prompts directly inside ChatGPT. This Privacy Policy explains how we handle your data — or more accurately, why we don't handle it at all.</p>
+        <p>We built PromptVault with a simple principle: <strong style="color:#f1f0ee;">your prompts are yours.</strong> We have no interest in your data, no infrastructure to store it, and no business model that depends on it.</p>
+      </div>
+    </div>
+
+    <!-- 02 Data We Do NOT Collect -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <span class="section-title">Data We Do NOT Collect</span>
+      </div>
+      <div class="section-body">
+        <p>The following types of data are <strong style="color:#f87171;">never collected, accessed, or transmitted</strong> by PromptVault:</p>
+        <div class="no-data-grid">
+          <div class="no-data-item"><span class="x">✕</span> Personal information</div>
+          <div class="no-data-item"><span class="x">✕</span> Email or name</div>
+          <div class="no-data-item"><span class="x">✕</span> Location data</div>
+          <div class="no-data-item"><span class="x">✕</span> Browsing history</div>
+          <div class="no-data-item"><span class="x">✕</span> Keystrokes or clicks</div>
+          <div class="no-data-item"><span class="x">✕</span> ChatGPT conversations</div>
+          <div class="no-data-item"><span class="x">✕</span> Financial information</div>
+          <div class="no-data-item"><span class="x">✕</span> Authentication data</div>
+          <div class="no-data-item"><span class="x">✕</span> Device identifiers</div>
+          <div class="no-data-item"><span class="x">✕</span> IP address</div>
+          <div class="no-data-item"><span class="x">✕</span> Usage analytics</div>
+          <div class="no-data-item"><span class="x">✕</span> Crash reports</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 What IS Stored Locally -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <span class="section-title">What IS Stored (Locally on Your Device)</span>
+      </div>
+      <div class="section-body">
+        <p>PromptVault stores the following data <strong style="color:#f1f0ee;">exclusively on your device</strong> using Chrome's built-in <code style="background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;font-size:13px;">chrome.storage.local</code> API. This data never leaves your browser.</p>
+        <div class="stored-item"><span class="check">✓</span><div><strong>Prompt library</strong> — titles, text content, tags, star status, and use count for each saved prompt</div></div>
+        <div class="stored-item"><span class="check">✓</span><div><strong>App settings</strong> — your theme preference (dark/light), sidebar position, font size, sort order, and sidebar width</div></div>
+        <p style="margin-top:8px;">This data is stored solely to make the extension work for you. It is never read by us, never synced to any server, and never shared with anyone.</p>
+      </div>
+    </div>
+
+    <!-- 04 Permissions -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <span class="section-title">Permissions & Why We Need Them</span>
+      </div>
+      <div class="section-body">
+        <p>PromptVault requests the minimum permissions required to function. Here is exactly what each permission does:</p>
+        <div class="perm-list">
+          <div class="perm-item">
+            <span class="perm-name">storage</span>
+            <span class="perm-desc">Saves your prompt library and settings locally on your device using Chrome's built-in storage. No data is sent anywhere.</span>
+          </div>
+          <div class="perm-item">
+            <span class="perm-name">activeTab</span>
+            <span class="perm-desc">Detects whether you are currently on chatgpt.com before the extension activates. Ensures PromptVault only runs on its intended target page.</span>
+          </div>
+          <div class="perm-item">
+            <span class="perm-name">scripting</span>
+            <span class="perm-desc">Allows the extension icon popup to open the PromptVault sidebar on the active ChatGPT tab when you click "Open PromptVault".</span>
+          </div>
+          <div class="perm-item">
+            <span class="perm-name">host: chatgpt.com</span>
+            <span class="perm-desc">Injects the PromptVault sidebar UI into the ChatGPT interface. This is the core feature — your prompt library lives inside ChatGPT. Limited strictly to chatgpt.com and chat.openai.com.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 Third Parties -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <span class="section-title">Third Parties & Data Sharing</span>
+      </div>
+      <div class="section-body">
+        <p>PromptVault does not integrate with any third-party services. We do not use:</p>
+        <p>— Analytics platforms (Google Analytics, Mixpanel, etc.)<br>
+           — Advertising networks<br>
+           — Cloud storage providers<br>
+           — Crash reporting services<br>
+           — Any external APIs</p>
+        <p>Your data is never sold, rented, shared, or transferred to any third party under any circumstances.</p>
+      </div>
+    </div>
+
+    <!-- 06 Remote Code -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <span class="section-title">Remote Code</span>
+      </div>
+      <div class="section-body">
+        <p>PromptVault does not use remote code of any kind. All JavaScript is bundled within the extension package itself. No external scripts, modules, or <code style="background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;font-size:13px;">eval()</code> calls are used.</p>
+      </div>
+    </div>
+
+    <!-- 07 Children -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <span class="section-title">Children's Privacy</span>
+      </div>
+      <div class="section-body">
+        <p>PromptVault is not directed at children under the age of 13. Since we collect no personal data from any user, we collect no data from children either.</p>
+      </div>
+    </div>
+
+    <!-- 08 Changes -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">08</span>
+        <span class="section-title">Changes to This Policy</span>
+      </div>
+      <div class="section-body">
+        <p>If this Privacy Policy is updated, the new version will be published at this URL with an updated "Last updated" date at the top. Since we collect no data, changes are unlikely — but we will communicate any meaningful update clearly.</p>
+      </div>
+    </div>
+
+    <!-- 09 Certifications -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">09</span>
+        <span class="section-title">Developer Certifications</span>
+      </div>
+      <div class="section-body">
+        <p>In compliance with the Chrome Web Store Developer Program Policies, we certify:</p>
+        <div class="cert-list">
+          <div class="cert-item">
+            <div class="cert-check">✓</div>
+            We do not sell or transfer user data to third parties, outside of approved use cases.
+          </div>
+          <div class="cert-item">
+            <div class="cert-check">✓</div>
+            We do not use or transfer user data for purposes that are unrelated to the extension's single purpose.
+          </div>
+          <div class="cert-item">
+            <div class="cert-check">✓</div>
+            We do not use or transfer user data to determine creditworthiness or for lending purposes.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 Contact -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">10</span>
+        <span class="section-title">Contact</span>
+      </div>
+      <div class="section-body">
+        <p>If you have any questions about this Privacy Policy or how PromptVault works, you can reach us at:</p>
+        <div class="contact-box">
+          📧 Email: <a href="mailto:hello@promptvault.dev">hello@promptvault.dev</a><br>
+          🌐 Extension: <a href="https://chromewebstore.google.com" target="_blank">Chrome Web Store — PromptVault</a>
+        </div>
+        <p>We aim to respond within 48 hours.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">⚡ PromptVault</div>
+    <div class="footer-sub">Smart Prompt Manager for ChatGPT &nbsp;·&nbsp; Privacy Policy v1.0 &nbsp;·&nbsp; March 2026</div>
+    <div class="footer-sub" style="margin-top:8px;">Built with zero data collection. Your prompts are yours.</div>
+  </footer>
+
+</body>
+</html>
